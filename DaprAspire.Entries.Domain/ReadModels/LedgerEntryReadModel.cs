@@ -1,6 +1,7 @@
 ﻿using DaprAspire.Entries.Domain.Aggregates;
 using DaprAspire.Entries.Domain.Events;
 using EventFlow.Aggregates;
+using EventFlow.MongoDB.ReadStores;
 using EventFlow.ReadStores;
 
 namespace DaprAspire.Entries.Domain.ReadModels
@@ -8,7 +9,7 @@ namespace DaprAspire.Entries.Domain.ReadModels
     /// <summary>
     /// Represents a read model for a ledger entry.
     /// </summary>
-    public class LedgerEntryReadModel : IReadModel,
+    public class LedgerEntryReadModel : IMongoDbReadModel,
         IAmReadModelFor<LedgerEntryAggregate, LedgerEntryId, EntryCreatedEvent>,
         IAmReadModelFor<LedgerEntryAggregate, LedgerEntryId, EntryCreditedEvent>,
         IAmReadModelFor<LedgerEntryAggregate, LedgerEntryId, EntryDebitedEvent>
@@ -16,6 +17,7 @@ namespace DaprAspire.Entries.Domain.ReadModels
     {
         public string Id { get; set; } = default!;
         public decimal Balance { get; set; }
+        public long? Version { get; set; } = 1;
 
         /// <summary>
         /// Applies the EntryCreatedEvent to initialize the read model.
