@@ -12,7 +12,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aspire.Hosting.AppHost"/>
+    <PackageReference Include="Aspire.Hosting.AppHost" />
+    <PackageReference Include="Aspire.Hosting.MongoDB" />
+    <PackageReference Include="Aspire.Hosting.Redis" />
+    <PackageReference Include="CommunityToolkit.Aspire.Hosting.Dapr" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DaprAspire.ConsolidationApi\DaprAspire.ConsolidationApi.csproj" />
+    <ProjectReference Include="..\DaprAspire.Entries.Api\DaprAspire.Entries.Api.csproj" />
   </ItemGroup>
 
 </Project>
