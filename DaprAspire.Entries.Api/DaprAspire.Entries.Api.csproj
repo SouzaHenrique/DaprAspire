@@ -7,15 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dapr.AspNetCore" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
+    <PackageReference Include="Swashbuckle.AspNetCore" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\DaprApire.Entries.Application\DaprApire.Entries.Application.csproj" />
+    <ProjectReference Include="..\DaprAspire.Domain\DaprAspire.Domain.csproj" />
+    <ProjectReference Include="..\DaprAspire.ServiceDefaults\DaprAspire.ServiceDefaults.csproj" />
   </ItemGroup>
 
 </Project>
