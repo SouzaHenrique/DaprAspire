@@ -12,6 +12,7 @@ builder.AddProject<Projects.DaprAspire_Entries_Api>("dapraspire-entries-api")
        .WithReference(mongodb);
 
 builder.AddProject<Projects.DaprAspire_ConsolidationApi>("dapraspire-consolidationapi")
-       .WithDaprSidecar();
+       .WithDaprSidecar()
+       .WithReference(mongodb);
 
 builder.Build().Run();
