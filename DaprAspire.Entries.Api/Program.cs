@@ -43,20 +43,19 @@ namespace DaprAspire.Entries.Api
 
             app.MapDefaultEndpoints();
 
-            app.UseCloudEvents();
-            app.MapSubscribeHandler();
-
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.MapOpenApi();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseAuthorization();
 
             app.MapGet("/", () => Results.Redirect("/swagger"));
             app.MapControllers();
+            app.UseCloudEvents();
+            app.MapSubscribeHandler();
 
             app.Run();
         }
