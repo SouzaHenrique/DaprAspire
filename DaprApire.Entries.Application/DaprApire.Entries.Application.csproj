@@ -10,6 +10,7 @@
     <PackageReference Include="EventFlow.MongoDB" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
     <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="Dapr.AspNetCore" />
   </ItemGroup>
 
   <ItemGroup>

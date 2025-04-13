@@ -1,4 +1,5 @@
 ﻿using DaprApire.Entries.Application.Features.Commands;
+using DaprApire.Entries.Application.Services.PubSub;
 
 using DaprAspire.Entries.Domain.Commands;
 using DaprAspire.Entries.Domain.Events;
@@ -21,7 +22,6 @@ namespace DaprApire.Entries.Application
             {
                 var mongodbConnectionString = configuration.GetConnectionString("mongodb");
                 options.ConfigureMongoDb(url: mongodbConnectionString, "entries")
-
                 .UseMongoDbEventStore()
                 .UseMongoDbSnapshotStore()
                 .UseMongoDbReadModel<LedgerEntryReadModel>()
@@ -29,7 +29,8 @@ namespace DaprApire.Entries.Application
                 .AddCommands(typeof(CreateEntryCommand), typeof(CreditEntryCommand), typeof(DebitEntryCommand))
                 .AddCommandHandlers(typeof(CreateEntryCommandHandler),
                                     typeof(CreditEntryCommandHandler),
-                                    typeof(DebitEntryCommandHandler));
+                                    typeof(DebitEntryCommandHandler))
+                .AddSubscribers(typeof(EntryCreatedEventPublisher));
             });
             return services;
         }
