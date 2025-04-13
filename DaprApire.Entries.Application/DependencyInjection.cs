@@ -15,6 +15,12 @@ namespace DaprApire.Entries.Application
 {
     public static class DependencyInjection
     {
+        /// <summary>
+        /// Adds the EventFlow types and configurations for the Entries module.
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
         public static IServiceCollection AddEntriesEventFlowTypes(this IServiceCollection services, IConfiguration configuration)
         {
             // Register the EventFlow modules and other dependencies here
@@ -25,12 +31,18 @@ namespace DaprApire.Entries.Application
                 .UseMongoDbEventStore()
                 .UseMongoDbSnapshotStore()
                 .UseMongoDbReadModel<LedgerEntryReadModel>()
+
                 .AddEvents(typeof(EntryCreatedEvent), typeof(EntryCreditedEvent), typeof(EntryDebitedEvent))
+
                 .AddCommands(typeof(CreateEntryCommand), typeof(CreditEntryCommand), typeof(DebitEntryCommand))
+
                 .AddCommandHandlers(typeof(CreateEntryCommandHandler),
                                     typeof(CreditEntryCommandHandler),
                                     typeof(DebitEntryCommandHandler))
-                .AddSubscribers(typeof(EntryCreatedEventPublisher));
+
+                .AddSubscribers(typeof(EntryCreatedEventPublisher),
+                                typeof(EntryCreditedEventPublisher),
+                                typeof(EntryDebitedEventPublisher));
             });
             return services;
         }
