@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DaprAspire.Consolidation.Application\DaprAspire.Consolidation.Application.csproj" />
+    <ProjectReference Include="..\DaprAspire.Domain\DaprAspire.Domain.csproj" />
     <ProjectReference Include="..\DaprAspire.ServiceDefaults\DaprAspire.ServiceDefaults.csproj" />
   </ItemGroup>
 
