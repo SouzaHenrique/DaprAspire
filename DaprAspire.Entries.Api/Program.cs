@@ -51,8 +51,7 @@ namespace DaprAspire.Entries.Api
 
             //app.UseHttpsRedirection();
             app.UseAuthorization();
-
-            app.MapGet("/", () => Results.Redirect("/swagger"));
+                       
             app.MapControllers();
             app.UseCloudEvents();
             app.MapSubscribeHandler();
