@@ -5,6 +5,7 @@ var redis = builder.AddRedis("redis");
 var mongodb = builder.AddMongoDB("mongodb");
 
 builder.AddDapr();
+builder.AddDaprPubSub("pubsub");
 
 builder.AddProject<Projects.DaprAspire_Entries_Api>("dapraspire-entries-api")
        .WithDaprSidecar()
