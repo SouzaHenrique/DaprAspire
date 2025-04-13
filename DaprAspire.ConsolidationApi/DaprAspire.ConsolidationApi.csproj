@@ -8,10 +8,12 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+    <PackageReference Include="Dapr.AspNetCore" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\DaprAspire.Consolidation.Application\DaprAspire.Consolidation.Application.csproj" />
+    <ProjectReference Include="..\DaprAspire.ServiceDefaults\DaprAspire.ServiceDefaults.csproj" />
   </ItemGroup>
 
 </Project>
