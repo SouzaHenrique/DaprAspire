@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DaprAspire.Consolidation.Domain\DaprAspire.Consolidation.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
