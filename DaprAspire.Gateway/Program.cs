@@ -50,8 +50,7 @@ namespace DaprAspire.Gateway
 
             app.MapReverseProxy();
 
-            app.Run();
-
+            //TODO: implementar via hostedservice?
             // Preloads and caches the aggregated "YARP" Swagger document after app startup,
             // ensuring it's ready when requested by Swagger UI.
             app.Lifetime.ApplicationStarted.Register(() =>
@@ -60,7 +59,7 @@ namespace DaprAspire.Gateway
                 {
                     using var scope = app.Services.CreateScope();
                     var swagger = scope.ServiceProvider.GetRequiredService<ISwaggerProvider>();
-                    
+
                     try
                     {
                         swagger.GetSwagger("YARP");
@@ -73,6 +72,7 @@ namespace DaprAspire.Gateway
                 });
             });
 
+            app.Run();
         }
     }
 }
