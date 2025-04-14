@@ -8,6 +8,8 @@ using MongoDB.Driver;
 using DaprAspire.IdentityService.Application.Commom.Managers;
 using DaprAspire.IdentityService.Application.Services.Seeders;
 using DaprAspire.IdentityService.Application.HostedServices;
+using DaprAspire.IdentityService.Infrastructure.Identity.Services;
+using DaprAspire.IdentityService.Application.Services.Auth;
 
 namespace DaprAspire.IdentityService.Application
 {
@@ -35,6 +37,8 @@ namespace DaprAspire.IdentityService.Application
 
             services.AddScoped<IdentitySeeder>();
             services.AddHostedService<IdentitySeederHostedService>();
+            services.AddScoped<TokenGeneratorService>();
+            services.AddScoped<AuthService>();
 
             return services;
         }
@@ -49,7 +53,6 @@ namespace DaprAspire.IdentityService.Application
 
             return services;
         }
-
 
     }
 }
