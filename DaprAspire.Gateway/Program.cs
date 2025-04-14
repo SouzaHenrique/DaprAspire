@@ -51,6 +51,28 @@ namespace DaprAspire.Gateway
             app.MapReverseProxy();
 
             app.Run();
+
+            // Preloads and caches the aggregated "YARP" Swagger document after app startup,
+            // ensuring it's ready when requested by Swagger UI.
+            app.Lifetime.ApplicationStarted.Register(() =>
+            {
+                Task.Run(() =>
+                {
+                    using var scope = app.Services.CreateScope();
+                    var swagger = scope.ServiceProvider.GetRequiredService<ISwaggerProvider>();
+                    
+                    try
+                    {
+                        swagger.GetSwagger("YARP");
+                        Console.WriteLine("Swagger YARP pré-carregado com sucesso.");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Falha ao gerar Swagger YARP no startup: " + ex.Message);
+                    }
+                });
+            });
+
         }
     }
 }
