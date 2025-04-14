@@ -1,3 +1,7 @@
+﻿using DaprAspire.IdentityService.Application;
+using DaprAspire.IdentityService.Application.Services.Seeders;
+
+using Microsoft.OpenApi.Models;
 
 namespace DaprAspire.IdentityService.Api
 {
@@ -9,12 +13,32 @@ namespace DaprAspire.IdentityService.Api
             builder.AddServiceDefaults();
 
             // Add services to the container.
+            builder.Services.AddApplicationServices(builder.Configuration);
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers().AddDapr();
+            builder.Services.AddDaprClient();
+
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Identity API",
+                    Version = "v1",
+                    Description = "API para gerenciar identidade de usuários",
+                });
+            });
+
             var app = builder.Build();
+
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI(); // /swagger/index.html
+            }
 
             app.MapDefaultEndpoints();
 
@@ -27,7 +51,6 @@ namespace DaprAspire.IdentityService.Api
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 
