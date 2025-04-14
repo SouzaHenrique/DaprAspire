@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using DaprAspire.IdentityService.Infrastructure.Identity.Stores;
 using MongoDB.Driver;
+using DaprAspire.IdentityService.Application.Commom.Managers;
 
 namespace DaprAspire.IdentityService.Application
 {
@@ -20,18 +21,23 @@ namespace DaprAspire.IdentityService.Application
                     .AddSignInManager<SignInManager<ApplicationUser>>()
                     .AddDefaultTokenProviders();
 
+            services.AddScoped<UserManager<ApplicationUser>, ApplicationUserManager>();
+            services.AddScoped<RoleManager<ApplicationRole>, ApplicationRoleManager>();
+
             return services;
         }
 
         public static IServiceCollection AddMongo(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddSingleton<IMongoClient>(_ =>
-            new MongoClient(configuration.GetConnectionString("MongoDb")));
+            new MongoClient(configuration.GetConnectionString("mongodb")));
 
             services.AddScoped(serviceProvider =>
                 serviceProvider.GetRequiredService<IMongoClient>().GetDatabase("identitydb"));
 
             return services;
         }
+
+
     }
 }
