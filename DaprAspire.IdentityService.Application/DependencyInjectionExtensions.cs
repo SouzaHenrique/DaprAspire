@@ -1,15 +1,16 @@
-﻿using DaprAspire.IdentityService.Domain.Entities.Identity;
+﻿using DaprAspire.IdentityService.Application.Commom.Managers;
+using DaprAspire.IdentityService.Application.HostedServices;
+using DaprAspire.IdentityService.Application.Services.Auth;
+using DaprAspire.IdentityService.Application.Services.Seeders;
+using DaprAspire.IdentityService.Domain.Entities.Identity;
+using DaprAspire.IdentityService.Infrastructure.Identity.Services;
+using DaprAspire.IdentityService.Infrastructure.Identity.Stores;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using DaprAspire.IdentityService.Infrastructure.Identity.Stores;
+
 using MongoDB.Driver;
-using DaprAspire.IdentityService.Application.Commom.Managers;
-using DaprAspire.IdentityService.Application.Services.Seeders;
-using DaprAspire.IdentityService.Application.HostedServices;
-using DaprAspire.IdentityService.Infrastructure.Identity.Services;
-using DaprAspire.IdentityService.Application.Services.Auth;
 
 namespace DaprAspire.IdentityService.Application
 {
