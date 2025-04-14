@@ -1,4 +1,7 @@
-﻿
+﻿using DaprAspire.Consolidation.Application;
+
+using Microsoft.OpenApi.Models;
+
 namespace DaprAspire.ConsolidationApi
 {
     public class Program
@@ -16,7 +19,28 @@ namespace DaprAspire.ConsolidationApi
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
+            builder.Services.AddMongo(builder.Configuration);
+            builder.Services.AddRepositories();
+            builder.Services.AddProjectionServices();
+
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Consolidation API",
+                    Version = "v1",
+                    Description = "API para consolidar e consultar lançamentos financeiros",
+                });
+            });
+
             var app = builder.Build();
+
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI(); // /swagger/index.html
+            }
 
             app.MapDefaultEndpoints();
 
