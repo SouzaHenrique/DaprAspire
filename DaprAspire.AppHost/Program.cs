@@ -25,7 +25,8 @@ DaprSidecarOptions options = new DaprSidecarOptions
 };
 
 IResourceBuilder<ProjectResource> gateway = builder.AddProject<Projects.DaprAspire_Gateway>("dapraspire-gateway")
-                                                   //.WithEndpoint(name: "gateway", port: 5055, targetPort: 8080, scheme: "http")
                                                    .WithDaprSidecar(options);
+
+builder.AddProject<Projects.DaprAspire_IdentityService_Api>("dapraspire-identityservice-api");
 
 builder.Build().Run();

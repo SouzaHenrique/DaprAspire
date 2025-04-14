@@ -22,6 +22,7 @@
     <ProjectReference Include="..\DaprAspire.ConsolidationApi\DaprAspire.ConsolidationApi.csproj" />
     <ProjectReference Include="..\DaprAspire.Entries.Api\DaprAspire.Entries.Api.csproj" />
     <ProjectReference Include="..\DaprAspire.Gateway\DaprAspire.Gateway.csproj" />
+    <ProjectReference Include="..\DaprAspire.IdentityService.Api\DaprAspire.IdentityService.Api.csproj" />
   </ItemGroup>
 
 </Project>
