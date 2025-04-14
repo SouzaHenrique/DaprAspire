@@ -1,5 +1,4 @@
 ﻿using DaprAspire.IdentityService.Application;
-using DaprAspire.IdentityService.Application.Services.Seeders;
 
 using Microsoft.OpenApi.Models;
 
