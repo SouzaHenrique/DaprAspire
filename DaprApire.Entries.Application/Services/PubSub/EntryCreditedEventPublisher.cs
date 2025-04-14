@@ -27,9 +27,10 @@ public class EntryCreditedEventPublisher :
             Id = domainEvent.AggregateIdentity.Value,
             Value = domainEvent.AggregateEvent.Value,
             Type = EventType.EntryCredited,
-            Timestamp = domainEvent.Timestamp
+            Timestamp = domainEvent.Timestamp,
+            AggregateSequenceNumber = domainEvent.AggregateSequenceNumber,
         };
 
-        await _daprClient.PublishEventAsync("pubsub", "entries.events", payload, cancellationToken);
+        await _daprClient.PublishEventAsync("pubsub", "entries.credited", payload, cancellationToken);
     }
 }

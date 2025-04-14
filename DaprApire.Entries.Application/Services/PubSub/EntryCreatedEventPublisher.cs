@@ -21,10 +21,11 @@ namespace DaprApire.Entries.Application.Services.PubSub
             {
                 Id = domainEvent.AggregateIdentity.Value,
                 Timestamp = domainEvent.Timestamp,
-                Type = EventType.EntryCreated
+                Type = EventType.EntryCreated,
+                AggregateSequenceNumber = domainEvent.AggregateSequenceNumber,
             };
 
-            await _daprClient.PublishEventAsync("pubsub", "entries.events", payload, cancellationToken);
+            await _daprClient.PublishEventAsync("pubsub", "entries.created", payload, cancellationToken);
         }
     }
 }
