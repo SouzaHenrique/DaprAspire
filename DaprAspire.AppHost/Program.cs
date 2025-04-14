@@ -4,12 +4,11 @@ using CommunityToolkit.Aspire.Hosting.Dapr;
 
 IDistributedApplicationBuilder builder = DistributedApplication.CreateBuilder(args);
 
-//var redis = builder.AddRedis("redis");
-
-IResourceBuilder<MongoDBServerResource> mongodb = builder.AddMongoDB("mongodb").WithLifetime(ContainerLifetime.Persistent);
-
 builder.AddDapr();
 builder.AddDaprPubSub("pubsub");
+
+IResourceBuilder<MongoDBServerResource> mongodb = builder.AddMongoDB("mongodb")
+                                                         .WithLifetime(ContainerLifetime.Persistent);
 
 builder.AddProject<Projects.DaprAspire_Entries_Api>("dapraspire-entries-api")
        .WithDaprSidecar()
@@ -19,14 +18,15 @@ builder.AddProject<Projects.DaprAspire_ConsolidationApi>("dapraspire-consolidati
        .WithDaprSidecar()
        .WithReference(mongodb);
 
-DaprSidecarOptions options = new DaprSidecarOptions
+var gatewaySideCarOptions = new DaprSidecarOptions
 {
     DaprHttpPort = 3500,
 };
 
 IResourceBuilder<ProjectResource> gateway = builder.AddProject<Projects.DaprAspire_Gateway>("dapraspire-gateway")
-                                                   .WithDaprSidecar(options);
+                                                   .WithDaprSidecar(gatewaySideCarOptions);
 
-builder.AddProject<Projects.DaprAspire_IdentityService_Api>("dapraspire-identityservice-api");
+builder.AddProject<Projects.DaprAspire_IdentityService_Api>("dapraspire-identityservice-api")
+       .WithDaprSidecar();
 
 builder.Build().Run();
