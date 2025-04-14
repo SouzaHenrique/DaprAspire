@@ -35,6 +35,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DaprAspire.Entries.Tests", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DaprAspire.Consolidation.Infrastructure", "DaprAspire.Consolidation.Infrastructure\DaprAspire.Consolidation.Infrastructure.csproj", "{CB601749-2FEB-4B51-82A7-D6F0C35D1CCC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gateway", "Gateway", "{30705D83-488B-41C8-A8A5-BCD9A402E331}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DaprAspire.Gateway", "DaprAspire.Gateway\DaprAspire.Gateway.csproj", "{6D4A2DE0-D312-4571-8B20-A17EA3FC8599}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +89,10 @@ Global
 		{CB601749-2FEB-4B51-82A7-D6F0C35D1CCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CB601749-2FEB-4B51-82A7-D6F0C35D1CCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CB601749-2FEB-4B51-82A7-D6F0C35D1CCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D4A2DE0-D312-4571-8B20-A17EA3FC8599}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D4A2DE0-D312-4571-8B20-A17EA3FC8599}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D4A2DE0-D312-4571-8B20-A17EA3FC8599}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D4A2DE0-D312-4571-8B20-A17EA3FC8599}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -98,6 +106,7 @@ Global
 		{3B72F222-CB6A-46C4-A75A-ADCCCDC94FEF} = {DDE15F87-ECF6-4126-A7BD-DCDC21A6BB73}
 		{2AF5BB27-665B-47DD-AB6B-A3CA646EFC0B} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{CB601749-2FEB-4B51-82A7-D6F0C35D1CCC} = {DDE15F87-ECF6-4126-A7BD-DCDC21A6BB73}
+		{6D4A2DE0-D312-4571-8B20-A17EA3FC8599} = {30705D83-488B-41C8-A8A5-BCD9A402E331}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7A71CA04-CB07-44C9-950A-3CE580155662}
