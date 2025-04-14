@@ -47,7 +47,7 @@ namespace DaprAspire.IdentityService.Api
                 app.MapOpenApi();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseAuthorization();
 
