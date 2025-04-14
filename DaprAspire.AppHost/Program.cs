@@ -27,6 +27,7 @@ IResourceBuilder<ProjectResource> gateway = builder.AddProject<Projects.DaprAspi
                                                    .WithDaprSidecar(gatewaySideCarOptions);
 
 builder.AddProject<Projects.DaprAspire_IdentityService_Api>("dapraspire-identityservice-api")
-       .WithDaprSidecar();
+       .WithDaprSidecar()
+       .WithReference(mongodb);
 
 builder.Build().Run();
