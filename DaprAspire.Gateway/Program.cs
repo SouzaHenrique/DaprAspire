@@ -1,5 +1,8 @@
-﻿using DaprAspire.Gateway.Utilities;
+﻿using DaprAspire.Gateway.Identity;
+using DaprAspire.Gateway.Utilities;
 
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 
@@ -17,42 +20,79 @@ namespace DaprAspire.Gateway
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Carrega a seção ReverseProxy do appsettings.json
-            var reverseProxyConfig = builder.Configuration.GetSection("ReverseProxy");
+#pragma warning disable ASP0013
+            builder.Host.ConfigureAppConfiguration((context, config) =>
+            {
+                config.AddUserSecrets<Program>();
+            });
+#pragma warning restore ASP0013
 
-            // Adiciona o YARP e o Swagger
+            var configuration = builder.Configuration;
+            var reverseProxyConfig = configuration.GetSection("ReverseProxy");
+
+            // Configura autenticação JWT via método utilitário
+            builder.Services.AddAuth(configuration);
+            builder.Services.AddAuthorization();
+
             builder.Services
                 .AddReverseProxy()
                 .LoadFromConfig(reverseProxyConfig)
                 .AddSwagger(reverseProxyConfig);
 
-            // Configura o SwaggerGen com um documento padrão
             builder.Services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("YARP", new OpenApiInfo { Title = "Aggregated Gateway API", Version = "YARP" });
             });
 
-            // Adiciona a configuração personalizada do Swagger
             builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 
             var app = builder.Build();
 
-            // Ativa o Swagger e o Swagger UI
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
-                // Obtém a configuração do Swagger para os clusters
-                var reverseProxyDocumentFilterConfig = app.Services.GetRequiredService<IOptions<ReverseProxyDocumentFilterConfig>>().Value;
+                var reverseProxyDocumentFilterConfig = app.Services
+                    .GetRequiredService<IOptions<ReverseProxyDocumentFilterConfig>>().Value;
 
-                // Adiciona o endpoint agregado ao Swagger UI
                 options.SwaggerEndpoint("/swagger/YARP/swagger.json", "YARP Gateway");
             });
 
-            app.MapReverseProxy();
+            app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
-            //TODO: implementar via hostedservice?
-            // Preloads and caches the aggregated "YARP" Swagger document after app startup,
-            // ensuring it's ready when requested by Swagger UI.
+            app.MapReverseProxy(proxyPipeline =>
+            {
+                proxyPipeline.Use(async (context, next) =>
+                {
+                    var path = context.Request.Path.Value;
+
+                    var isPublic =
+                        path?.StartsWith("/swagger", StringComparison.OrdinalIgnoreCase) == true ||
+                        path?.Contains("/swagger.json", StringComparison.OrdinalIgnoreCase) == true ||
+                        path?.Equals("/identity/api/Account/login", StringComparison.OrdinalIgnoreCase) == true;
+
+                    if (isPublic)
+                    {
+                        await next();
+                        return;
+                    }
+
+                    // Autentica normalmente
+                    var authService = context.RequestServices.GetRequiredService<IAuthenticationService>();
+                    var authResult = await authService.AuthenticateAsync(context, JwtBearerDefaults.AuthenticationScheme);
+
+                    if (!authResult.Succeeded)
+                    {
+                        context.Response.StatusCode = 401;
+                        return;
+                    }
+
+                    await next();
+                });
+            });
+
+            // Pré-carrega o Swagger unificado
             app.Lifetime.ApplicationStarted.Register(() =>
             {
                 Task.Run(() =>
