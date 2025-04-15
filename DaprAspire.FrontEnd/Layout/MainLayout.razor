@@ -1,3 +1,20 @@
 ﻿@inherits LayoutComponentBase
 
-@Body
+<PageTitle>DaprAspire | Financial Management</PageTitle>
+<MudThemeProvider />
+<MudSnackbarProvider />
+<MudPopoverProvider />
+<MudDialogProvider FullWidth="false"
+                   MaxWidth="MaxWidth.Large"
+                   CloseButton="true"
+                   BackdropClick="true"
+                   NoHeader="false"
+                   Position="DialogPosition.Center"
+                   CloseOnEscapeKey="true" />
+<MudLayout>
+    <MudMainContent>
+        <MudContainer Style="max-width:none!important">
+            @Body
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
