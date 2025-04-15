@@ -46,6 +46,10 @@ Este repositório contém uma aplicação financeira distribuída baseada em mic
    - **Swagger Gateway:** http://localhost:{porta-do-gateway}/swagger  
    - **Aspire Dashboard:** http://localhost:18888
 
+6. **Usuarios padrão para acessar o app:**
+   - Admin : Admin@123
+   - User : User@123
+
 ---
 
 ## 🏗 Arquitetura
@@ -135,6 +139,18 @@ A arquitetura segue o estilo **microsserviços orientado a eventos**, com **Dapr
 - Persistência incremental do estado
 - Retry, circuit breaker, métricas
 - Modelo granular de permissões por controller
+
+## ✅ Avaliação dos Requisitos Arquiteturais
+
+| Aspecto                        | Implementação no Projeto                                                                                         |
+|-------------------------------|-------------------------------------------------------------------------------------------------------------------|
+| **Escalabilidade**            | Utiliza arquitetura de **microsserviços desacoplados** com Dapr, possibilitando **escalabilidade horizontal** independente para cada serviço. O **YARP Gateway** atua como balanceador lógico, permitindo crescimento sem degradação. |
+| **Resiliência**               | Comunicação resiliente via **Dapr Pub/Sub**, tratamento centralizado de erros com **middleware de exceção**, e uso do **Aspire Dashboard** para **monitoramento em tempo real**. A arquitetura permite fácil adoção de estratégias de failover e retry. |
+| **Segurança**                 | Implementação de **JWT com ASP.NET Identity** e controle de escopos no Gateway. Os segredos sensíveis são isolados com **UserSecrets**. O Gateway aplica autenticação e autorização centralizadas. O Swagger permite testes autenticados. |
+| **Padrões Arquiteturais**     | Adoção de **Microsserviços**, separação em camadas por projeto (`Domain`, `Application`, `Infrastructure`, `Api`). Uso de **Dapr** como infraestrutura de mensageria, state store e service invocation, promovendo **desacoplamento e extensibilidade**. |
+| **Integração**                | Comunicação via **HTTP + Dapr Sidecar**, com abstração de transporte. O gateway é o ponto de entrada seguro. Mensageria é feita via **Pub/Sub** com persistência dos eventos em MongoDB. Os serviços são facilmente substituíveis ou atualizáveis. |
+| **Requisitos Não-Funcionais** | O uso do **Aspire** permite **visualização de métricas como uso de CPU, memória, tempo de resposta e chamadas** entre serviços. A aplicação é observável via **Serilog estruturado**, com logs persistidos e filtráveis. O gateway também possui integração com Swagger UI. |
+
 
 ---
 
