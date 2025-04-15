@@ -1,4 +1,5 @@
 ﻿using DaprAspire.Gateway.Identity;
+using DaprAspire.Gateway.Middlewares;
 using DaprAspire.Gateway.Utilities;
 
 using Microsoft.AspNetCore.Authentication;
@@ -71,6 +72,7 @@ namespace DaprAspire.Gateway
             });
 
             app.UseRouting();
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
             app.UseAuthentication();
             app.UseAuthorization();
 
