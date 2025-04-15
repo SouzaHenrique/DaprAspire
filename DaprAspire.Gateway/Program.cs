@@ -48,6 +48,17 @@ namespace DaprAspire.Gateway
 
             builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins", policy =>
+                {
+                    policy
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                });
+            });
+
             var app = builder.Build();
 
             app.UseSwagger();
@@ -62,6 +73,8 @@ namespace DaprAspire.Gateway
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseCors("AllowAllOrigins");
 
             app.MapReverseProxy(proxyPipeline =>
             {
