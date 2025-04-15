@@ -42,6 +42,8 @@ namespace DaprAspire.Gateway
             builder.Services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("YARP", new OpenApiInfo { Title = "Aggregated Gateway API", Version = "YARP" });
+
+                options.DocumentFilter<SecurityRequirementsDocumentFilter>();
             });
 
             builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();

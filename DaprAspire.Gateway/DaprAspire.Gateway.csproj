@@ -17,10 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ReverseProxy\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\DaprAspire.ServiceDefaults\DaprAspire.ServiceDefaults.csproj" />
   </ItemGroup>
 
