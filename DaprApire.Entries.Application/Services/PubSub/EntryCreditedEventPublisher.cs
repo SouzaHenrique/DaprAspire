@@ -8,20 +8,26 @@ using DaprAspire.Entries.Domain.Events;
 using EventFlow.Aggregates;
 using EventFlow.Subscribers;
 
+using Microsoft.Extensions.Logging;
+
 public class EntryCreditedEventPublisher :
     ISubscribeSynchronousTo<LedgerEntryAggregate, LedgerEntryId, EntryCreditedEvent>
 {
     private readonly DaprClient _daprClient;
+    private readonly ILogger<EntryCreditedEventPublisher> _logger
 
-    public EntryCreditedEventPublisher(DaprClient daprClient)
+    public EntryCreditedEventPublisher(DaprClient daprClient, ILogger<EntryCreditedEventPublisher> logger)
     {
         _daprClient = daprClient;
+        _logger = logger;
     }
 
     public async Task HandleAsync(
         IDomainEvent<LedgerEntryAggregate, LedgerEntryId, EntryCreditedEvent> domainEvent,
         CancellationToken cancellationToken)
     {
+        _logger.LogInformation("Publishing EntryCreditedEvent to Dapr pub/sub");
+
         var payload = new EntryCreditedMessage
         {
             Id = domainEvent.AggregateIdentity.Value,
