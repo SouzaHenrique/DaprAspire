@@ -1,7 +1,35 @@
 ﻿@page "/"
+@using MudBlazor
+@layout LoginLayout
+@inject NavigationManager Navigation
 
-<PageTitle>Home</PageTitle>
+<MudPaper Class="d-flex flex-column align-center justify-center mx-auto my-12 pa-8 elevation-6" Style="max-width: 400px;">
+    <MudText Typo="Typo.h5" Class="mb-6">Login</MudText>
 
-<h1>Hello, world!</h1>
+    <MudTextField @bind-Value="_username" Label="Username" Variant="Variant.Filled" Required="true" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.AccountCircle" Class="mb-4" />
 
-Welcome to your new app.
+    <MudTextField @bind-Value="_password" Label="Password" Variant="Variant.Filled" InputType="InputType.Password" Required="true" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Lock" Class="mb-4" />
+
+    <MudButton Color="Color.Primary" Variant="Variant.Filled" Class="w-100" OnClick="HandleLogin">Entrar</MudButton>
+
+    <MudText Typo="Typo.caption" Class="mt-4 text-center text-error">@_errorMessage</MudText>
+</MudPaper>
+
+@code {
+    private string _username;
+    private string _password;
+    private string _errorMessage;
+
+    private async Task HandleLogin()
+    {
+        // Simulação (substitua com chamada à API real)
+        if (_username == "admin" && _password == "admin")
+        {
+            Navigation.NavigateTo("/");
+        }
+        else
+        {
+            _errorMessage = "Usuário ou senha inválidos.";
+        }
+    }
+}
