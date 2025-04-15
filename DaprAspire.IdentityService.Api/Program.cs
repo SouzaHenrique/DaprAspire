@@ -1,4 +1,5 @@
-﻿using DaprAspire.IdentityService.Application;
+﻿using DaprAspire.IdentityService.Api.Middlewares;
+using DaprAspire.IdentityService.Application;
 
 using Microsoft.OpenApi.Models;
 
@@ -32,6 +33,8 @@ namespace DaprAspire.IdentityService.Api
             });
 
             var app = builder.Build();
+
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
 
             if (app.Environment.IsDevelopment())
             {
