@@ -33,6 +33,19 @@ namespace DaprAspire.FrontEnd.Services.Auth
             return keyValuePairs.Select(kvp => new Claim(kvp.Key, kvp.Value.ToString()));
         }
 
+        public void NotifyUserAuthentication(string token)
+        {
+            var identity = new ClaimsIdentity(ParseClaimsFromJwt(token), "jwt");
+            var user = new ClaimsPrincipal(identity);
+            NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(user)));
+        }
+
+        public void NotifyUserLogout()
+        {
+            var anonymous = new ClaimsPrincipal(new ClaimsIdentity());
+            NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(anonymous)));
+        }
+
         private string PadBase64(string base64) =>
             base64.PadRight(base64.Length + (4 - base64.Length % 4) % 4, '=');
     }

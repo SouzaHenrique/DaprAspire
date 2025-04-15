@@ -1,8 +1,14 @@
-﻿@inject NavigationManager Navigation
-
+﻿@using Blazored.LocalStorage
+@inject NavigationManager Navigation
+@inject ILocalStorageService LocalStorage
 @code {
-    protected override void OnInitialized()
+
+    protected override async Task OnInitializedAsync()
     {
-        Navigation.NavigateTo("/", true);
+        var token = await LocalStorage.GetItemAsync<string>("authToken");
+        if (string.IsNullOrEmpty(token))
+        {
+            Navigation.NavigateTo("/", true);
+        }
     }
 }

@@ -1,11 +1,104 @@
 ﻿@page "/ledgers"
 
+@using DaprAspire.FrontEnd.Models.Ledgers
+@using DaprAspire.FrontEnd.Services.Entries
+@using DaprAspire.FrontEnd.Shared.Dialog
 @using Microsoft.AspNetCore.Authorization
+@using DaprAspire.Domain;
 
 @attribute [Authorize]
+@inject EntriesService EntriesService
+@inject IDialogService DialogService
+@inject NavigationManager Navigation
+@inject ISnackbar Snackbar
 
-<h3>Ledgers</h3>
+<MudPaper Class="pa-6">
+
+    <MudTable Items="_ledgers" Hover="true" Loading="_loading" Elevation="1">
+        <HeaderContent>
+            <MudTh>Ledger ID</MudTh>
+            <MudTh>Ações</MudTh>
+        </HeaderContent>
+
+        <RowTemplate>
+            <MudTd DataLabel="Ledger ID">@context.Id</MudTd>
+            <MudTd>
+                <MudButton Size="Size.Small" Color="Color.Success" Variant="Variant.Outlined" OnClick="@(() => OpenEntryDialog(context.Id, "credit"))">
+                    Crédito
+                </MudButton>
+                <MudButton Size="Size.Small" Color="Color.Error" Variant="Variant.Outlined" Class="ml-2" OnClick="@(() => OpenEntryDialog(context.Id, "debit"))">
+                    Débito
+                </MudButton>
+                <MudButton Size="Size.Small" Color="Color.Primary" Variant="Variant.Text" Class="ml-2" OnClick="@(() => ShowDailyBalance(context.Id))">
+                    Saldo Diário
+                </MudButton>
+            </MudTd>
+        </RowTemplate>
+    </MudTable>
+
+    <MudFab StartIcon="@Icons.Material.Filled.Add"
+            Color="Color.Primary"
+            Style="position: fixed; bottom: 24px; right: 24px;"
+            OnClick="CreateNewLedger" />
+
+</MudPaper>
 
 @code {
+    private List<LedgerEntryResponse> _ledgers = [];
+    private bool _loading = false;
 
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadLedgersAsync();
+    }
+
+    private async Task LoadLedgersAsync()
+    {
+        _loading = true;
+        try
+        {
+            _ledgers = (await EntriesService.GetAllAsync(1, 10)).ToList();
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine("Erro ao carregar ledgers: " + ex.Message);
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+
+    private async Task CreateNewLedger()
+    {
+        try
+        {
+            await EntriesService.CreateAsync();
+            Snackbar.Add("Ledger added", Severity.Success);
+            await LoadLedgersAsync();
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Erro ao criar ledger: {ex.Message}", Severity.Error);
+        }
+    }
+
+    private async Task OpenEntryDialog(string ledgerId, string type)
+    {
+        var dialog = await DialogService.ShowAsync<ValueDialog>($"Adicionar {type}", new DialogParameters
+            {
+                ["LedgerId"] = ledgerId,
+                ["IsCredit"] = type == "credit"
+            });
+
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+            await LoadLedgersAsync();
+    }
+
+    private void ShowDailyBalance(string ledgerId)
+    {
+        Navigation.NavigateTo($"/dailyBalance?ledgerId={ledgerId}");
+    }
 }

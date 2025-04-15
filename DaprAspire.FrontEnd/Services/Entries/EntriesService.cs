@@ -11,7 +11,7 @@ namespace DaprAspire.FrontEnd.Services.Entries
 
         public async Task<IEnumerable<LedgerEntryResponse>> GetAllAsync(int page = 1, int pageSize = 10)
         {
-            var response = await _httpClient.GetAsync($"/entries?PageNumber={page}&PageSize={pageSize}");
+            var response = await _httpClient.GetAsync($"/entries/entries?PageNumber={page}&PageSize={pageSize}");
 
             if (!response.IsSuccessStatusCode)
             {
@@ -24,7 +24,7 @@ namespace DaprAspire.FrontEnd.Services.Entries
 
         public async Task<string?> CreateAsync()
         {
-            var response = await _httpClient.PostAsync("/entries", null);
+            var response = await _httpClient.PostAsync("/entries/entries", null);
 
             if (!response.IsSuccessStatusCode)
                 throw new Exception($"Erro ao criar lançamento: {response.StatusCode}");
@@ -37,7 +37,7 @@ namespace DaprAspire.FrontEnd.Services.Entries
         public async Task CreditAsync(string entryId, decimal value)
         {
             var request = new ValueRequest { Value = value };
-            var response = await _httpClient.PostAsJsonAsync($"/entries/{entryId}/credit", request);
+            var response = await _httpClient.PostAsJsonAsync($"/entries/entries/{entryId}/credit", request);
 
             if (!response.IsSuccessStatusCode)
                 throw new Exception($"Erro ao aplicar crédito: {response.StatusCode}");
@@ -46,7 +46,7 @@ namespace DaprAspire.FrontEnd.Services.Entries
         public async Task DebitAsync(string entryId, decimal value)
         {
             var request = new ValueRequest { Value = value };
-            var response = await _httpClient.PostAsJsonAsync($"/entries/{entryId}/debit", request);
+            var response = await _httpClient.PostAsJsonAsync($"/entries/entries/{entryId}/debit", request);
 
             if (!response.IsSuccessStatusCode)
                 throw new Exception($"Erro ao aplicar débito: {response.StatusCode}");

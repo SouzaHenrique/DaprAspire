@@ -11,6 +11,8 @@ namespace DaprAspire.FrontEnd.Services.Handlers
         {
             var token = await _localStorage.GetItemAsStringAsync("authToken", cancellationToken);
 
+            token = token?.Replace("\"", string.Empty);
+
             if (!string.IsNullOrWhiteSpace(token))
             {
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
