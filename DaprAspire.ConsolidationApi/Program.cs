@@ -1,4 +1,5 @@
 ﻿using DaprAspire.Consolidation.Application;
+using DaprAspire.ConsolidationApi.Middlewares;
 
 using Microsoft.OpenApi.Models;
 
@@ -35,6 +36,8 @@ namespace DaprAspire.ConsolidationApi
             });
 
             var app = builder.Build();
+
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
 
             if (app.Environment.IsDevelopment())
             {
