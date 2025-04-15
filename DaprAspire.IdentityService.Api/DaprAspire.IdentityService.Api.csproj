@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DaprAspire.Domain\DaprAspire.Domain.csproj" />
     <ProjectReference Include="..\DaprAspire.IdentityService.Application\DaprAspire.IdentityService.Application.csproj" />
     <ProjectReference Include="..\DaprAspire.ServiceDefaults\DaprAspire.ServiceDefaults.csproj" />
   </ItemGroup>

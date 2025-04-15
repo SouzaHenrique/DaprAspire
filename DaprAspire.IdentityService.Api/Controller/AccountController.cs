@@ -1,4 +1,5 @@
-﻿using DaprAspire.IdentityService.Application.Services.Auth;
+﻿using DaprAspire.Domain.CrossCutting.DTO;
+using DaprAspire.IdentityService.Application.Services.Auth;
 
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,8 +20,6 @@ namespace DaprAspire.IdentityService.Api.Controller
             return Ok(new { access_token = token });
         }
     }
-
-    public record LoginRequest(string Username, string Password);
 }
 
 
