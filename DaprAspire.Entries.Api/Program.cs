@@ -5,6 +5,8 @@ using DaprAspire.Entries.Infrastructure;
 
 using Microsoft.OpenApi.Models;
 
+using Serilog;
+
 namespace DaprAspire.Entries.Api
 {
     public class Program
@@ -12,6 +14,15 @@ namespace DaprAspire.Entries.Api
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            Log.Logger = new LoggerConfiguration()
+               .ReadFrom.Configuration(builder.Configuration)
+               .Enrich.FromLogContext()
+               .WriteTo.Console()
+               .CreateLogger();
+
+            builder.Host.UseSerilog();
+
             builder.AddServiceDefaults();
 
             // Add services to the container.
