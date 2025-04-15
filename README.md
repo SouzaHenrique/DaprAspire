@@ -122,7 +122,7 @@ A arquitetura segue o estilo **microsserviços orientado a eventos**, com **Dapr
 
 ## 📦 Padrões
 
-- Clean Architecture + DDD + CQRS + Event Sourcing
+- Clean Architecture + DDD + CQRS + Event Sourcing + PubSub
 - Separação por camadas: `Domain`, `Application`, `Infrastructure`, `Api`
 
 ---
