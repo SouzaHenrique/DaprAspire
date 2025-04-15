@@ -28,12 +28,6 @@ Este repositório contém uma aplicação financeira distribuída baseada em mic
    dapr init
    ```
 
-3. **Suba o MongoDB com Docker:**
-
-   ```bash
-   docker run -d -p 27017:27017 --name dapr-mongo mongo
-   ```
-
 4. **Execute o Aspire AppHost:**
 
    ```bash
