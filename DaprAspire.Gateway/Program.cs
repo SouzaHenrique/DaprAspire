@@ -1,9 +1,12 @@
-﻿using DaprAspire.Gateway.Identity;
+﻿using System.Threading.RateLimiting;
+
+using DaprAspire.Gateway.Identity;
 using DaprAspire.Gateway.Middlewares;
 using DaprAspire.Gateway.Utilities;
 
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 
@@ -60,7 +63,27 @@ namespace DaprAspire.Gateway
                 });
             });
 
+            builder.Services.AddRateLimiter(options =>
+            {
+                options.AddPolicy("AuthenticatedUser", context =>
+                {
+                    var user = context.User.Identity?.Name ?? "anonymous";
+                    return RateLimitPartition.GetTokenBucketLimiter(
+                        partitionKey: user,
+                        factory: _ => new TokenBucketRateLimiterOptions
+                        {
+                            TokenLimit = 10, // máximo de requisições no bucket
+                            TokensPerPeriod = 10, // renovação
+                            ReplenishmentPeriod = TimeSpan.FromSeconds(30), // intervalo de renovação
+                            QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                            QueueLimit = 2
+                        });
+                });
+            });
+
             var app = builder.Build();
+
+            app.UseRateLimiter();
 
             app.UseSwagger();
             app.UseSwaggerUI(options =>
@@ -80,6 +103,8 @@ namespace DaprAspire.Gateway
 
             app.MapReverseProxy(proxyPipeline =>
             {
+                proxyPipeline.UseRateLimiter();
+
                 proxyPipeline.Use(async (context, next) =>
                 {
                     var path = context.Request.Path.Value;
