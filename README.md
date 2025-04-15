@@ -8,7 +8,7 @@ Este repositório contém uma aplicação financeira distribuída baseada em mic
 
 ### Pré-requisitos
 
-- [.NET 8 SDK](https://dotnet.microsoft.com/download)
+- [.NET 9 SDK](https://dotnet.microsoft.com/download)
 - [Dapr CLI](https://docs.dapr.io/getting-started/install-dapr/)
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/) (para MongoDB)
 - [Aspire Dashboard](https://learn.microsoft.com/en-us/dotnet/aspire/overview) (opcional, mas recomendado)
@@ -28,12 +28,6 @@ Este repositório contém uma aplicação financeira distribuída baseada em mic
    dapr init
    ```
 
-3. **Suba o MongoDB com Docker:**
-
-   ```bash
-   docker run -d -p 27017:27017 --name dapr-mongo mongo
-   ```
-
 4. **Execute o Aspire AppHost:**
 
    ```bash
@@ -45,6 +39,10 @@ Este repositório contém uma aplicação financeira distribuída baseada em mic
    - **Front-end:** http://localhost:7016  
    - **Swagger Gateway:** http://localhost:{porta-do-gateway}/swagger  
    - **Aspire Dashboard:** http://localhost:18888
+
+6. **Usuarios padrão para acessar o app:**
+   - **usuário:** Admin | **senha:** Admin@123
+   - **usuário:** User  | **senha:** User@123
 
 ---
 
@@ -124,7 +122,7 @@ A arquitetura segue o estilo **microsserviços orientado a eventos**, com **Dapr
 
 ## 📦 Padrões
 
-- Clean Architecture + DDD + CQRS
+- Clean Architecture + DDD + CQRS + Event Sourcing + PubSub
 - Separação por camadas: `Domain`, `Application`, `Infrastructure`, `Api`
 
 ---
@@ -135,6 +133,18 @@ A arquitetura segue o estilo **microsserviços orientado a eventos**, com **Dapr
 - Persistência incremental do estado
 - Retry, circuit breaker, métricas
 - Modelo granular de permissões por controller
+
+## ✅ Avaliação dos Requisitos Arquiteturais
+
+| Aspecto                        | Implementação no Projeto                                                                                         |
+|-------------------------------|-------------------------------------------------------------------------------------------------------------------|
+| **Escalabilidade**            | Utiliza arquitetura de **microsserviços desacoplados** com Dapr, possibilitando **escalabilidade horizontal** independente para cada serviço. O **YARP Gateway** atua como balanceador lógico, permitindo crescimento sem degradação. |
+| **Resiliência**               | Comunicação resiliente via **Dapr Pub/Sub**, tratamento centralizado de erros com **middleware de exceção**, e uso do **Aspire Dashboard** para **monitoramento em tempo real**. A arquitetura permite fácil adoção de estratégias de failover e retry. |
+| **Segurança**                 | Implementação de **JWT com ASP.NET Identity** e controle de escopos no Gateway. Os segredos sensíveis são isolados com **UserSecrets**. O Gateway aplica autenticação e autorização centralizadas. O Swagger permite testes autenticados. |
+| **Padrões Arquiteturais**     | Adoção de **Microsserviços**, separação em camadas por projeto (`Domain`, `Application`, `Infrastructure`, `Api`). Uso de **Dapr** como infraestrutura de mensageria, state store e service invocation, promovendo **desacoplamento e extensibilidade**. |
+| **Integração**                | Comunicação via **HTTP + Dapr Sidecar**, com abstração de transporte. O gateway é o ponto de entrada seguro. Mensageria é feita via **Pub/Sub** com persistência dos eventos em MongoDB. Os serviços são facilmente substituíveis ou atualizáveis. |
+| **Requisitos Não-Funcionais** | O uso do **Aspire** permite **visualização de métricas como uso de CPU, memória, tempo de resposta e chamadas** entre serviços. A aplicação é observável via **Serilog estruturado**, com logs persistidos e filtráveis. O gateway também possui integração com Swagger UI. |
+
 
 ---
 
