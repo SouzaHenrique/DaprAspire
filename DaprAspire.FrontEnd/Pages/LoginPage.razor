@@ -1,7 +1,15 @@
 ﻿@page "/"
+
+@using Blazored.LocalStorage
+@using DaprAspire.FrontEnd.Services.Auth
 @using MudBlazor
+
 @layout LoginLayout
+
 @inject NavigationManager Navigation
+@inject AuthService AuthService
+@inject ILocalStorageService LocalStorage
+
 
 <MudPaper Class="d-flex flex-column align-center justify-center mx-auto my-12 pa-8 elevation-6" Style="max-width: 400px;">
     <MudText Typo="Typo.h5" Class="mb-6">Login</MudText>
@@ -16,20 +24,17 @@
 </MudPaper>
 
 @code {
-    private string _username;
-    private string _password;
-    private string _errorMessage;
+    private string _username = string.Empty;
+    private string _password = string.Empty;
+    private string _errorMessage = string.Empty;
 
     private async Task HandleLogin()
     {
-        // Simulação (substitua com chamada à API real)
-        if (_username == "admin" && _password == "admin")
-        {
-            Navigation.NavigateTo("/");
-        }
+        var success = await AuthService.LoginAsync(_username, _password);
+
+        if (success)
+            Navigation.NavigateTo("/ledgers");
         else
-        {
             _errorMessage = "Usuário ou senha inválidos.";
-        }
     }
 }

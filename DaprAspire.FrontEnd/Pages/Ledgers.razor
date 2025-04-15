@@ -1,4 +1,10 @@
-﻿<h3>Ledgers</h3>
+﻿@page "/ledgers"
+
+@using Microsoft.AspNetCore.Authorization
+
+@attribute [Authorize]
+
+<h3>Ledgers</h3>
 
 @code {
 

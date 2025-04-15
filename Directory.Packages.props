@@ -7,6 +7,7 @@
     <PackageVersion Include="Aspire.Hosting.AppHost" Version="9.2.0" />
     <PackageVersion Include="Aspire.Hosting.MongoDB" Version="9.2.0" />
     <PackageVersion Include="Aspire.Hosting.Redis" Version="9.2.0" />
+    <PackageVersion Include="Blazored.LocalStorage" Version="4.5.0" />
     <PackageVersion Include="CommunityToolkit.Aspire.Hosting.Dapr" Version="9.3.0" />
     <PackageVersion Include="Dapr.AspNetCore" Version="1.15.3" />
     <PackageVersion Include="EventFlow" Version="1.2.0" />
@@ -14,11 +15,13 @@
     <PackageVersion Include="EventFlow.TestHelpers" Version="1.2.0" />
     <PackageVersion Include="FluentAssertions" Version="8.2.0" />
     <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.4" />
+    <PackageVersion Include="Microsoft.AspNetCore.Components.Authorization" Version="9.0.4" />
     <PackageVersion Include="Microsoft.AspNetCore.Identity" Version="2.3.1" />
     <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="9.0.4" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.4" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.4" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.4" />
+    <PackageVersion Include="Microsoft.Extensions.Http" Version="9.0.4" />
     <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="9.4.0" />
     <PackageVersion Include="Microsoft.Extensions.Identity.Stores" Version="9.0.4" />
     <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="9.2.0" />
