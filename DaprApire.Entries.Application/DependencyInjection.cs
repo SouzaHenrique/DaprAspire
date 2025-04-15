@@ -1,8 +1,10 @@
 ﻿using DaprApire.Entries.Application.Features.Commands;
+using DaprApire.Entries.Application.Features.Queries;
 using DaprApire.Entries.Application.Services.PubSub;
 
 using DaprAspire.Entries.Domain.Commands;
 using DaprAspire.Entries.Domain.Events;
+using DaprAspire.Entries.Domain.Queries;
 using DaprAspire.Entries.Domain.ReadModels;
 
 using EventFlow.Extensions;
@@ -39,6 +41,8 @@ namespace DaprApire.Entries.Application
                 .AddCommandHandlers(typeof(CreateEntryCommandHandler),
                                     typeof(CreditEntryCommandHandler),
                                     typeof(DebitEntryCommandHandler))
+
+                .AddQueryHandler<GetAllLedgerEntriesQueryHandler, GetAllLedgerEntriesQuery, IReadOnlyCollection<LedgerEntryReadModel>>()
 
                 .AddSubscribers(typeof(EntryCreatedEventPublisher),
                                 typeof(EntryCreditedEventPublisher),
