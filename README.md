@@ -52,7 +52,7 @@ Este repositório contém uma aplicação financeira distribuída baseada em mic
 
 A arquitetura segue o estilo **microsserviços orientado a eventos**, com **Dapr Pub/Sub**, **JWT para autenticação**, **YARP como API Gateway**, **MongoDB como armazenamento principal** e **EventFlow para Event Sourcing**.
 
-![Diagrama Arquitetural](./docs/arquitetura.png)
+![Diagrama Arquitetural](./solution_diagram.svg)
 
 ### Componentes principais:
 
