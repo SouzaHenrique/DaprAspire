@@ -1,4 +1,5 @@
 ﻿using DaprAspire.FrontEnd.Services.Auth;
+using DaprAspire.FrontEnd.Services.Entries;
 using DaprAspire.FrontEnd.Services.Handlers;
 
 namespace DaprAspire.FrontEnd
@@ -21,6 +22,7 @@ namespace DaprAspire.FrontEnd
                 client.BaseAddress = new Uri("http://localhost:5055/");
             }).AddHttpMessageHandler<AuthorizationMessageHandler>();
 
+            services.AddScoped<EntriesService>();
 
             return services;
         }
