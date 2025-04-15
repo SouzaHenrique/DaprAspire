@@ -8,7 +8,7 @@ Este repositório contém uma aplicação financeira distribuída baseada em mic
 
 ### Pré-requisitos
 
-- [.NET 8 SDK](https://dotnet.microsoft.com/download)
+- [.NET 9 SDK](https://dotnet.microsoft.com/download)
 - [Dapr CLI](https://docs.dapr.io/getting-started/install-dapr/)
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/) (para MongoDB)
 - [Aspire Dashboard](https://learn.microsoft.com/en-us/dotnet/aspire/overview) (opcional, mas recomendado)
