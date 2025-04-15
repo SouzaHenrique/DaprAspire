@@ -25,6 +25,7 @@ Este repositório contém uma aplicação financeira distribuída baseada em mic
 2. **Instale e inicialize o Dapr:**
 
    ```bash
+   winget install Dapr.CLI
    dapr init
    ```
 
@@ -118,7 +119,32 @@ A arquitetura segue o estilo **microsserviços orientado a eventos**, com **Dapr
 - **Global Error Handling** em todos os serviços
 - Suporte a Swagger com token JWT
 
----
+## 🔐 Configuração de Segredos Locais
+
+Este projeto utiliza o mecanismo de [User Secrets](https://learn.microsoft.com/aspnet/core/security/app-secrets) do .NET para armazenar configurações sensíveis, como as chaves JWT utilizadas pelo Gateway e pelo serviço de identidade.
+
+Esses dados **não são versionados no repositório** por motivos de segurança, mas os projetos já possuem os elementos `<UserSecretsId>` definidos em seus respectivos arquivos `.csproj`. Portanto, **é necessário definir os segredos localmente** antes de rodar a aplicação.
+
+> ⚠️ **Importante:** Utilize exatamente os mesmos valores de `Key`, `Issuer` e `Audience` tanto no Gateway quanto no IdentityService para garantir a geração e validação correta dos tokens JWT.
+
+### 💡 Como configurar os secrets
+
+Abra um terminal e execute os comandos abaixo:
+
+### 1. Segredos do Gateway
+
+```bash
+dotnet user-secrets set "Jwt:Key" "sua-chave-jwt-super-secreta" --project ./src/DaprAspire.Gateway
+dotnet user-secrets set "Jwt:Issuer" "DaprAspire.Gateway" --project ./src/DaprAspire.Gateway
+dotnet user-secrets set "Jwt:Audience" "DaprAspire.FrontEnd" --project ./src/DaprAspire.Gateway
+```
+
+### 2. Segredos do Serviço de Identidade
+```bash
+dotnet user-secrets set "Jwt:Key" "sua-chave-jwt-super-secreta" --project ./src/DaprAspire.IdentityService.Api
+dotnet user-secrets set "Jwt:Issuer" "DaprAspire.Gateway" --project ./src/DaprAspire.IdentityService.Api
+dotnet user-secrets set "Jwt:Audience" "DaprAspire.FrontEnd" --project ./src/DaprAspire.IdentityService.Api
+```
 
 ## 📦 Padrões
 
