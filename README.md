@@ -18,7 +18,7 @@ Este repositório contém uma aplicação financeira distribuída baseada em mic
 1. **Clone o repositório:**
 
    ```bash
-   git clone https://github.com/seu-usuario/DaprAspire.git
+   git clone https://github.com/SouzaHenrique/DaprAspire.git
    cd DaprAspire
    ```
 
