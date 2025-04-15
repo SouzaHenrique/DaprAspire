@@ -1,5 +1,7 @@
 ﻿using DaprApire.Entries.Application;
 
+using DaprAspire.Entries.Infrastructure;
+
 using Microsoft.OpenApi.Models;
 
 namespace DaprAspire.Entries.Api
@@ -21,6 +23,8 @@ namespace DaprAspire.Entries.Api
 
             // Add EventFlow services
             builder.Services.AddEntriesEventFlowTypes(builder.Configuration);
+            builder.Services.AddMongo(builder.Configuration);
+            builder.Services.AddRepositories();
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(options =>

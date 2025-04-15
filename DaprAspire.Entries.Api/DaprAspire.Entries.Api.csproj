@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DaprApire.Entries.Application\DaprApire.Entries.Application.csproj" />
     <ProjectReference Include="..\DaprAspire.Domain\DaprAspire.Domain.csproj" />
+    <ProjectReference Include="..\DaprAspire.Entries.Infrastructure\DaprAspire.Entries.Infrastructure.csproj" />
     <ProjectReference Include="..\DaprAspire.ServiceDefaults\DaprAspire.ServiceDefaults.csproj" />
   </ItemGroup>
 
