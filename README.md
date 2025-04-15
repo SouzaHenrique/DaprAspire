@@ -47,8 +47,8 @@ Este repositório contém uma aplicação financeira distribuída baseada em mic
    - **Aspire Dashboard:** http://localhost:18888
 
 6. **Usuarios padrão para acessar o app:**
-   - Admin : Admin@123
-   - User : User@123
+   - **usuário:** Admin | **senha:** Admin@123
+   - **usuário:** User  | **senha:** User@123
 
 ---
 
