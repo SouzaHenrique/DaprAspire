@@ -41,7 +41,7 @@ Esses dados **não são versionados no repositório** por motivos de segurança,
 
 Abra um terminal e execute os comandos abaixo:
 
-### 1. Segredos do Gateway
+3.1 Segredos do Gateway
 
 ```bash
 dotnet user-secrets set "Jwt:Key" "sua-chave-jwt-super-secreta" --project ./src/DaprAspire.Gateway
@@ -49,7 +49,7 @@ dotnet user-secrets set "Jwt:Issuer" "DaprAspire.Gateway" --project ./src/DaprAs
 dotnet user-secrets set "Jwt:Audience" "DaprAspire.FrontEnd" --project ./src/DaprAspire.Gateway
 ```
 
-### 2. Segredos do Serviço de Identidade
+3.2 Segredos do Serviço de Identidade
 ```bash
 dotnet user-secrets set "Jwt:Key" "sua-chave-jwt-super-secreta" --project ./src/DaprAspire.IdentityService.Api
 dotnet user-secrets set "Jwt:Issuer" "DaprAspire.Gateway" --project ./src/DaprAspire.IdentityService.Api
