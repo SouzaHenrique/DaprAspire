@@ -18,8 +18,7 @@ Este repositório contém uma aplicação financeira distribuída baseada em mic
 1. **Clone o repositório:**
 
    ```bash
-   git clone https://github.com/SouzaHenrique/DaprAspire.git
-   cd DaprAspire
+   git clone https://github.com/SouzaHenrique/DaprAspire.git   
    ```
 
 2. **Instale e inicialize o Dapr:**
@@ -60,6 +59,7 @@ Este repositório contém uma aplicação financeira distribuída baseada em mic
 4. **Execute o Aspire AppHost:**
 
    ```bash
+   cd DaprAspire
    dotnet run --project DaprAspire.AppHost
    ```
 
