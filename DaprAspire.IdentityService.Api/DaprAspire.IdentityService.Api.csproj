@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>4c1e68aa-767e-427d-a4ca-dac5f6cb95d8</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Serilog.AspNetCore" />
+    <PackageReference Include="Serilog.Sinks.Console" />
+    <PackageReference Include="Serilog.Settings.Configuration" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
+    <PackageReference Include="Dapr.AspNetCore" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+    <PackageReference Include="Swashbuckle.AspNetCore" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DaprAspire.Domain\DaprAspire.Domain.csproj" />
+    <ProjectReference Include="..\DaprAspire.IdentityService.Application\DaprAspire.IdentityService.Application.csproj" />
+    <ProjectReference Include="..\DaprAspire.ServiceDefaults\DaprAspire.ServiceDefaults.csproj" />
+  </ItemGroup>
+
+</Project>

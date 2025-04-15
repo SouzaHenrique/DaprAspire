@@ -1,0 +1,17 @@
+@using Microsoft.AspNetCore.Components.Web
+@using MudBlazor
+
+<ErrorBoundary>
+    <ChildContent>
+        @ChildContent
+    </ChildContent>
+    <ErrorContent>
+        <MudAlert Severity="Severity.Error" Dense="true">
+            Um erro inesperado ocorreu. Por favor, tente novamente mais tarde.
+        </MudAlert>
+    </ErrorContent>
+</ErrorBoundary>
+
+@code {
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+}

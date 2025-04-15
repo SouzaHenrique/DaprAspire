@@ -9,6 +9,7 @@
   
   <ItemGroup>
     <PackageReference Include="EventFlow" />
+    <PackageReference Include="EventFlow.MongoDB" />
   </ItemGroup>
 
 </Project>

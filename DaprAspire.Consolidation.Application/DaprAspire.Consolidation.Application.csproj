@@ -6,4 +6,15 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DaprAspire.Consolidation.Domain\DaprAspire.Consolidation.Domain.csproj" />
+    <ProjectReference Include="..\DaprAspire.Consolidation.Infrastructure\DaprAspire.Consolidation.Infrastructure.csproj" />
+    <ProjectReference Include="..\DaprAspire.Domain\DaprAspire.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

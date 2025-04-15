@@ -1,0 +1,38 @@
+﻿@inherits LayoutComponentBase
+
+@using Microsoft.AspNetCore.Components.Authorization
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<PageTitle>DaprAspire | Financial Management</PageTitle>
+<MudThemeProvider />
+<MudSnackbarProvider />
+<MudPopoverProvider />
+<MudDialogProvider FullWidth="false"
+                   MaxWidth="MaxWidth.Large"
+                   CloseButton="true"
+                   BackdropClick="true"
+                   NoHeader="false"
+                   Position="DialogPosition.Center"
+                   CloseOnEscapeKey="true" />
+<MudLayout>
+    @if (_isAuthenticated)
+    {
+        <MudAppBar Elevation="1">
+            <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End" />
+        </MudAppBar>
+        
+        <MudMainContent Style="max-width:none!important">
+            @Body
+        </MudMainContent>
+    }
+</MudLayout>
+@code {
+
+    private bool _isAuthenticated;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        _isAuthenticated = authState.User.Identity?.IsAuthenticated ?? false;
+    }
+}

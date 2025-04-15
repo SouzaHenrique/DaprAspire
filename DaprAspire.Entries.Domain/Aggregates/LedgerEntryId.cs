@@ -9,5 +9,6 @@ namespace DaprAspire.Entries.Domain.Aggregates
     public class LedgerEntryId : Identity<LedgerEntryId>
     {
         public LedgerEntryId(string value) : base(value) { }
+
     }
 }

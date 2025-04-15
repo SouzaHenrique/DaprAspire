@@ -1,0 +1,51 @@
+﻿@using DaprAspire.FrontEnd.Services.Entries
+
+@inject IDialogService DialogService
+@inject EntriesService EntriesService
+
+<MudDialog>
+    <DialogContent>
+        <MudTextField @bind-Value="_value"
+                      Label="Valor"
+                      Variant="Variant.Outlined"
+                      InputType="InputType.Number"
+                      Immediate="true"
+                      Margin="Margin.Dense"
+                      Adornment="Adornment.End"
+                      AdornmentText="R$" />
+
+        <MudText Typo="Typo.caption" Class="mt-1">
+            @(IsCredit ? "Adicionar crédito" : "Adicionar débito") para Ledger: <b>@LedgerId</b>
+        </MudText>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Submit">Confirmar</MudButton>
+        <MudButton Color="Color.Secondary" OnClick="Cancel">Cancelar</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = default!;
+    [Parameter] public string LedgerId { get; set; } = string.Empty;
+    [Parameter] public bool IsCredit { get; set; }
+
+    private decimal _value = 0;
+
+    private async Task Submit()
+    {
+        if (_value <= 0)
+        {
+            await DialogService.ShowMessageBox("Erro", "Informe um valor maior que zero.");
+            return;
+        }
+
+        if (IsCredit)
+            await EntriesService.CreditAsync(LedgerId, _value);
+        else
+            await EntriesService.DebitAsync(LedgerId, _value);
+
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+}

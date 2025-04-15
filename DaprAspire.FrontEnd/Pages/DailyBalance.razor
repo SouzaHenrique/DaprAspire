@@ -1,0 +1,71 @@
+﻿@page "/dailyBalance"
+
+@inject NavigationManager Navigation;
+@inject ConsolidationService ConsolidationService;
+
+@using DaprAspire.FrontEnd.Models.Projections
+@using DaprAspire.FrontEnd.Services.Consolidations
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.WebUtilities
+
+@attribute [Authorize]
+
+<PageTitle>Saldo Diário</PageTitle>
+
+<MudPaper Class="d-flex flex-column align-center justify-center mx-auto my-12 pa-6 elevation-6" Style="max-width: 400px;">
+    @if (_loading)
+    {
+        <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+    }
+    else if (_balance is null)
+    {
+        <MudText Typo="Typo.h6" Color="Color.Error">Saldo não encontrado.</MudText>
+    }
+    else
+    {
+        <MudText Typo="Typo.h5" Class="mb-4">Saldo diário</MudText>
+        <MudText Typo="Typo.h6" Class="mb-6">R$ @_balance.Balance</MudText>
+    }
+
+    <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="GoBack">
+        Voltar
+    </MudButton>
+</MudPaper>
+
+@code {
+    private string? _ledgerId;
+    private DailyBalanceResponse? _balance;
+    private bool _loading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var uri = Navigation.ToAbsoluteUri(Navigation.Uri);
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("ledgerId", out var id))
+        {
+            _ledgerId = id!;
+            await LoadBalanceAsync();
+        }
+        else
+        {
+            _loading = false;
+        }
+    }
+
+    private async Task LoadBalanceAsync()
+    {
+        try
+        {
+            _balance = await ConsolidationService.GetDailyBalanceAsync(_ledgerId!);
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"Erro ao buscar saldo diário: {ex.Message}");
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+
+    private void GoBack() => Navigation.NavigateTo("/ledgers");
+}
