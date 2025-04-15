@@ -6,9 +6,10 @@ using DaprAspire.Gateway.Utilities;
 
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+
+using Serilog;
 
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -23,6 +24,14 @@ namespace DaprAspire.Gateway
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            Log.Logger = new LoggerConfiguration()
+               .ReadFrom.Configuration(builder.Configuration)
+               .Enrich.FromLogContext()
+               .WriteTo.Console()
+               .CreateLogger();
+
+            builder.Host.UseSerilog();
 
 #pragma warning disable ASP0013
             builder.Host.ConfigureAppConfiguration((context, config) =>
