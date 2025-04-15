@@ -52,6 +52,8 @@ namespace DaprAspire.Gateway
                 .LoadFromConfig(reverseProxyConfig)
                 .AddSwagger(reverseProxyConfig);
 
+            builder.Services.AddControllers();
+
             builder.Services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("YARP", new OpenApiInfo { Title = "Aggregated Gateway API", Version = "YARP" });
