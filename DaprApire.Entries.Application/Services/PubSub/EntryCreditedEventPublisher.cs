@@ -14,7 +14,7 @@ public class EntryCreditedEventPublisher :
     ISubscribeSynchronousTo<LedgerEntryAggregate, LedgerEntryId, EntryCreditedEvent>
 {
     private readonly DaprClient _daprClient;
-    private readonly ILogger<EntryCreditedEventPublisher> _logger
+    private readonly ILogger<EntryCreditedEventPublisher> _logger;
 
     public EntryCreditedEventPublisher(DaprClient daprClient, ILogger<EntryCreditedEventPublisher> logger)
     {
