@@ -30,4 +30,6 @@ var gatewaySideCarOptions = new DaprSidecarOptions
 IResourceBuilder<ProjectResource> gateway = builder.AddProject<Projects.DaprAspire_Gateway>("dapraspire-gateway")
                                                    .WithDaprSidecar(gatewaySideCarOptions);
 
+builder.AddProject<Projects.DaprAspire_FrontEnd>("dapraspire-frontend");
+
 builder.Build().Run();
