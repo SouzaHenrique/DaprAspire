@@ -1,4 +1,5 @@
 ﻿using DaprAspire.FrontEnd.Services.Auth;
+using DaprAspire.FrontEnd.Services.Consolidations;
 using DaprAspire.FrontEnd.Services.Entries;
 using DaprAspire.FrontEnd.Services.Handlers;
 
@@ -23,6 +24,7 @@ namespace DaprAspire.FrontEnd
             }).AddHttpMessageHandler<AuthorizationMessageHandler>();
 
             services.AddScoped<EntriesService>();
+            services.AddScoped<ConsolidationService>();
 
             return services;
         }
