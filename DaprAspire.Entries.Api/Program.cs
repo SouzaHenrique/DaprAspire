@@ -1,5 +1,6 @@
 ﻿using DaprApire.Entries.Application;
 
+using DaprAspire.Entries.Api.Middlewares;
 using DaprAspire.Entries.Infrastructure;
 
 using Microsoft.OpenApi.Models;
@@ -38,6 +39,8 @@ namespace DaprAspire.Entries.Api
             });
 
             var app = builder.Build();
+
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
 
             if (app.Environment.IsDevelopment())
             {
