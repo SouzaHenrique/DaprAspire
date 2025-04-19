@@ -156,10 +156,18 @@ A arquitetura segue o estilo **microsserviços orientado a eventos**, com **Dapr
 
 ## 📌 Futuras melhorias
 
-- Implementar **Snapshot Engine**
-- Persistência incremental do estado
-- Retry, circuit breaker, métricas
-- Modelo granular de permissões por controller
+- ✅ **Implementar Snapshot Engine** para reconstrução eficiente do estado a partir de eventos.
+- ✅ **Persistência incremental de projeções** em MongoDB para consultas otimizadas e desacopladas.
+- 🔒 **Modelo granular de permissões** por controller/escopo com políticas explícitas.
+- ♻️ **Retries e Circuit Breakers** via Dapr resiliency policies para serviços críticos.
+- 📈 **Exposição de métricas customizadas** (ex: entradas criadas, tempo de resposta) com integração a Prometheus/Grafana.
+- 🧩 **Desacoplamento da lógica do Gateway** com middlewares nomeados para CORS, autenticação e rate-limit.
+- 📡 ~~**Propagação de X-Correlation-ID** entre serviços para rastreamento distribuído com Serilog.~~ ✅
+- 🔧 **Centralização de configurações sensíveis** com injeção segura de `UserSecrets` e suporte à produção via Azure Key Vault.
+- 🛡️ **Validação antecipada de JWT nos sidecars Dapr** (`dapr.yaml`) para bloquear requisições inválidas no nível do sidecar.
+- 📦 **Criação de pacotes compartilhados** entre front e backend para DTOs e contratos comuns.
+- 📃 ~~**Documentação das decisões arquiteturais (ADR)** para rastreabilidade e onboarding da equipe.~~ ✅
+
 
 ## ✅ Avaliação dos Requisitos Arquiteturais
 
