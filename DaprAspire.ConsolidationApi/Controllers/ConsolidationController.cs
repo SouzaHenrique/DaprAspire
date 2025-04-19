@@ -8,14 +8,16 @@ namespace DaprAspire.ConsolidationApi.Controllers
     [ApiController]
     [Route("events/entries")]
     [ApiExplorerSettings(IgnoreApi = true)]
-    public class ConsolidationController(IEntryProjectionService projectionService) : ControllerBase
+    public class ConsolidationController(IEntryProjectionService projectionService, ILogger<ConsolidationController> logger) : ControllerBase
     {
         private readonly IEntryProjectionService _projectionService = projectionService;
+        private readonly ILogger<ConsolidationController> _logger = logger;
 
         [Topic("pubsub", "entries.created")]
         [HttpPost("created")]
         public async Task<IActionResult> HandleCreated([FromBody] EntryCreatedMessage message)
         {
+            _logger.LogInformation("Handling entry created event for ID: {Id}", message.Id);
             await _projectionService.ApplyAsync(message);
             return Ok();
         }
@@ -24,6 +26,7 @@ namespace DaprAspire.ConsolidationApi.Controllers
         [HttpPost("credited")]
         public async Task<IActionResult> HandleCredited([FromBody] EntryCreditedMessage message)
         {
+            _logger.LogInformation("Handling entry credited event for ID: {Id}", message.Id);
             await _projectionService.ApplyAsync(message);
             return Ok();
         }
@@ -32,6 +35,7 @@ namespace DaprAspire.ConsolidationApi.Controllers
         [HttpPost("debited")]
         public async Task<IActionResult> HandleDebited([FromBody] EntryDebitedMessage message)
         {
+            _logger.LogInformation("Handling entry debited event for ID: {Id}", message.Id);
             await _projectionService.ApplyAsync(message);
             return Ok();
         }        

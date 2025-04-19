@@ -3,6 +3,9 @@ using DaprAspire.ConsolidationApi.Middlewares;
 
 using Microsoft.OpenApi.Models;
 
+using Serilog;
+using Serilog.Sinks.OpenTelemetry;
+
 namespace DaprAspire.ConsolidationApi
 {
     public class Program
@@ -10,6 +13,28 @@ namespace DaprAspire.ConsolidationApi
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            var useOtlpExporter = !string.IsNullOrWhiteSpace(builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]);
+
+            var logBuilder = new LoggerConfiguration()
+               .ReadFrom.Configuration(builder.Configuration)
+               .Enrich.FromLogContext()
+               .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] [{CorrelationId}] {Message:lj}{NewLine}{Exception}");
+
+            if (useOtlpExporter)
+            {
+                logBuilder
+               .WriteTo.OpenTelemetry(options =>
+               {
+                   options.Endpoint = builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"];
+                   options.ResourceAttributes.Add("service.name", "apiservice");
+               });
+            };
+
+            Log.Logger = logBuilder.CreateBootstrapLogger();
+
+            builder.Host.UseSerilog();
+
             builder.AddServiceDefaults();
 
             // Add services to the container.
@@ -36,6 +61,8 @@ namespace DaprAspire.ConsolidationApi
             });
 
             var app = builder.Build();
+
+            app.UseMiddleware<CorrelationIdMiddleware>();
 
             app.UseMiddleware<ExceptionHandlingMiddleware>();
 
