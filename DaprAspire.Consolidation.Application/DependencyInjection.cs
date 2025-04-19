@@ -31,7 +31,7 @@ namespace DaprAspire.Consolidation.Application
         {
             services.AddSingleton(sp =>
             {
-                var mongoClient = new MongoClient(config.GetConnectionString("mongodb"));
+                var mongoClient = new MongoClient(config.GetConnectionString("consolidation-db"));
                 return mongoClient.GetDatabase("consolidation");
             });
 

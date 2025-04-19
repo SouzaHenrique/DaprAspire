@@ -47,7 +47,7 @@ namespace DaprAspire.IdentityService.Application
         public static IServiceCollection AddMongo(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddSingleton<IMongoClient>(_ =>
-            new MongoClient(configuration.GetConnectionString("mongodb")));
+            new MongoClient(configuration.GetConnectionString("identity-db")));
 
             services.AddScoped(serviceProvider =>
                 serviceProvider.GetRequiredService<IMongoClient>().GetDatabase("identitydb"));

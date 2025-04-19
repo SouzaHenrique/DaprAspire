@@ -28,7 +28,7 @@ namespace DaprApire.Entries.Application
             // Register the EventFlow modules and other dependencies here
             services.AddEventFlow(options =>
             {
-                var mongodbConnectionString = configuration.GetConnectionString("mongodb");
+                var mongodbConnectionString = configuration.GetConnectionString("entries-db");
                 options.ConfigureMongoDb(url: mongodbConnectionString, "entries")
                 .UseMongoDbEventStore()
                 .UseMongoDbSnapshotStore()

@@ -7,28 +7,36 @@ IDistributedApplicationBuilder builder = DistributedApplication.CreateBuilder(ar
 builder.AddDapr();
 builder.AddDaprPubSub("pubsub");
 
-IResourceBuilder<MongoDBServerResource> mongodb = builder.AddMongoDB("mongodb")
-                                                         .WithLifetime(ContainerLifetime.Persistent);
+IResourceBuilder<MongoDBServerResource> entriesDb = builder.AddMongoDB("entries-db")
+                                                           .WithLifetime(ContainerLifetime.Persistent);
+
+IResourceBuilder<MongoDBServerResource> consolidationDb = builder.AddMongoDB("consolidation-db")
+                                                                 .WithLifetime(ContainerLifetime.Persistent);
+
+IResourceBuilder<MongoDBServerResource> identityDb = builder.AddMongoDB("identity-db")
+                                                                 .WithLifetime(ContainerLifetime.Persistent);
 
 builder.AddProject<Projects.DaprAspire_Entries_Api>("dapraspire-entries-api")
        .WithDaprSidecar()
-       .WithReference(mongodb);
+       .WithReference(entriesDb);
+
 
 builder.AddProject<Projects.DaprAspire_ConsolidationApi>("dapraspire-consolidationapi")
        .WithDaprSidecar()
-       .WithReference(mongodb);
+       .WithReference(consolidationDb);
+
 
 builder.AddProject<Projects.DaprAspire_IdentityService_Api>("dapraspire-identityservice-api")
        .WithDaprSidecar()
-       .WithReference(mongodb);
+       .WithReference(identityDb);
 
-var gatewaySideCarOptions = new DaprSidecarOptions
-{
-    DaprHttpPort = 3500,
-};
 
-IResourceBuilder<ProjectResource> gateway = builder.AddProject<Projects.DaprAspire_Gateway>("dapraspire-gateway")
-                                                   .WithDaprSidecar(gatewaySideCarOptions);
+builder.AddProject<Projects.DaprAspire_Gateway>("dapraspire-gateway")
+       .WithDaprSidecar(new DaprSidecarOptions
+       {
+           DaprHttpPort = 3500,
+       });
+
 
 builder.AddProject<Projects.DaprAspire_FrontEnd>("dapraspire-frontend");
 

@@ -20,7 +20,7 @@ namespace DaprAspire.Entries.Infrastructure
         {
             services.AddSingleton(sp =>
             {
-                var mongoClient = new MongoClient(config.GetConnectionString("mongodb"));
+                var mongoClient = new MongoClient(config.GetConnectionString("entries-db"));
                 return mongoClient.GetDatabase("entries");
             });
 
