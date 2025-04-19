@@ -40,19 +40,19 @@ Este repositório contém uma aplicação financeira distribuída baseada em mic
 
     Abra um terminal e execute os comandos abaixo:
 
-    3.1 Segredos do Gateway
+    3.1 Segredos do Gateway (DaprAspire.Gateway)
 
     ```bash
-    dotnet user-secrets set "Jwt:Key" "sua-chave-jwt-super-secreta" --project ./src/DaprAspire.Gateway
-    dotnet user-secrets set "Jwt:Issuer" "DaprAspire.Gateway" --project ./src/DaprAspire.Gateway
-    dotnet user-secrets set "Jwt:Audience" "DaprAspire.FrontEnd" --project ./src/DaprAspire.Gateway
+    dotnet user-secrets set "Jwt:Key" "sua-chave-jwt-super-secreta" 
+    dotnet user-secrets set "Jwt:Issuer" "DaprAspire.Gateway"
+    dotnet user-secrets set "Jwt:Audience" "DaprAspire.FrontEnd"
     ```
 
-    3.2 Segredos do Serviço de Identidade
+    3.2 Segredos do Serviço de Identidade (DaprAspire.IdentityService.Api)
     ```bash
-    dotnet user-secrets set "Jwt:Key" "sua-chave-jwt-super-secreta" --project ./src/DaprAspire.IdentityService.Api
-    dotnet user-secrets set "Jwt:Issuer" "DaprAspire.Gateway" --project ./src/DaprAspire.IdentityService.Api
-    dotnet user-secrets set "Jwt:Audience" "DaprAspire.FrontEnd" --project ./src/DaprAspire.IdentityService.Api
+    dotnet user-secrets set "Jwt:Key" "sua-chave-jwt-super-secreta"
+    dotnet user-secrets set "Jwt:Issuer" "DaprAspire.Gateway"
+    dotnet user-secrets set "Jwt:Audience" "DaprAspire.FrontEnd"
     ```
    
 
