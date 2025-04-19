@@ -1,10 +1,11 @@
 ﻿using DaprAspire.Consolidation.Domain.Projections;
+using DaprAspire.Consolidation.Domain.ServiceDefinitions;
 
 using MongoDB.Driver;
 
 namespace DaprAspire.Consolidation.Infrastructure.Repositories
 {
-    public class MongoProjectionRepository<T>(IMongoDatabase database) : IProjectionRepository<T> where T : Projection
+    public class ProjectionRepository<T>(IMongoDatabase database) : IProjectionRepository<T> where T : Projection
     {
         private static readonly string _collectionName = typeof(T).Name.ToLowerInvariant() + "s";
         private readonly IMongoCollection<T> _collection = database.GetCollection<T>(_collectionName);

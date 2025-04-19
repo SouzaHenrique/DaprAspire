@@ -1,6 +1,6 @@
 ﻿using DaprAspire.Consolidation.Domain.Projections;
 
-namespace DaprAspire.Consolidation.Infrastructure.Repositories
+namespace DaprAspire.Consolidation.Domain.ServiceDefinitions
 {
     public interface IProjectionRepository<T> where T : Projection
     {

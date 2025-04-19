@@ -1,7 +1,7 @@
 ﻿
 using DaprAspire.Consolidation.Domain.Projections;
+using DaprAspire.Consolidation.Domain.ServiceDefinitions;
 using DaprAspire.Consolidation.Domain.ValueObjects;
-using DaprAspire.Consolidation.Infrastructure.Repositories;
 using DaprAspire.Domain.CrossCutting.Messaging.Events;
 
 namespace DaprAspire.Consolidation.Application.Services.ProjectionService

@@ -1,4 +1,5 @@
 ﻿using DaprAspire.Consolidation.Application.Services.ProjectionService;
+using DaprAspire.Consolidation.Domain.ServiceDefinitions;
 using DaprAspire.Consolidation.Infrastructure.Repositories;
 
 using Microsoft.Extensions.Configuration;
@@ -17,7 +18,7 @@ namespace DaprAspire.Consolidation.Application
         /// <returns></returns>
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
-            services.AddSingleton(typeof(IProjectionRepository<>), typeof(MongoProjectionRepository<>));
+            services.AddSingleton(typeof(IProjectionRepository<>), typeof(ProjectionRepository<>));
             return services;
         }
 

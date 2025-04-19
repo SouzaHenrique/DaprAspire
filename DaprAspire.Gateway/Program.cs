@@ -168,14 +168,18 @@ namespace DaprAspire.Gateway
                     using var scope = app.Services.CreateScope();
                     var swagger = scope.ServiceProvider.GetRequiredService<ISwaggerProvider>();
 
+                    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+
+                    logger.LogInformation("Iniciando pré-carregamento do Swagger YARP...");
+
                     try
                     {
                         swagger.GetSwagger("YARP");
-                        Console.WriteLine("Swagger YARP pré-carregado com sucesso.");
+                        logger.LogInformation("Swagger YARP pré-carregado com sucesso.");
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Falha ao gerar Swagger YARP no startup: " + ex.Message);
+                        logger.LogInformation("Falha ao gerar Swagger YARP no startup: " + ex.Message);
                     }
                 });
             });

@@ -20,7 +20,6 @@ builder.AddProject<Projects.DaprAspire_Entries_Api>("dapraspire-entries-api")
        .WithDaprSidecar()
        .WithReference(entriesDb);
 
-
 builder.AddProject<Projects.DaprAspire_ConsolidationApi>("dapraspire-consolidationapi")
        .WithDaprSidecar()
        .WithReference(consolidationDb);
@@ -37,7 +36,7 @@ builder.AddProject<Projects.DaprAspire_Gateway>("dapraspire-gateway")
            DaprHttpPort = 3500,
        });
 
-
 builder.AddProject<Projects.DaprAspire_FrontEnd>("dapraspire-frontend");
+
 
 builder.Build().Run();
