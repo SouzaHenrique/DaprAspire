@@ -1,8 +1,11 @@
 ﻿
 using DaprAspire.IdentityService.Application.Services.Seeders;
 
+using DnsClient.Internal;
+
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace DaprAspire.IdentityService.Application.HostedServices
 {
@@ -12,10 +15,11 @@ namespace DaprAspire.IdentityService.Application.HostedServices
     public class IdentitySeederHostedService : IHostedService
     {
         private readonly IServiceProvider _serviceProvider;
-
-        public IdentitySeederHostedService(IServiceProvider serviceProvider)
+        private readonly ILogger<IdentitySeederHostedService> _logger;
+        public IdentitySeederHostedService(IServiceProvider serviceProvider, ILogger<IdentitySeederHostedService> logger)
         {
             _serviceProvider = serviceProvider;
+            _logger = logger;
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
@@ -29,7 +33,7 @@ namespace DaprAspire.IdentityService.Application.HostedServices
 
             await seeder.SeedAsync(cancellationToken);
 
-            Console.WriteLine("IdentitySeeder executed via hosted service.");
+            _logger.LogInformation("IdentitySeeder executed via hosted service.");
         }
 
         public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
