@@ -25,11 +25,25 @@ namespace DaprAspire.Gateway
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            Log.Logger = new LoggerConfiguration()
+            var useOtlpExporter = !string.IsNullOrWhiteSpace(builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]);
+
+            var logBuilder = new LoggerConfiguration()
                .ReadFrom.Configuration(builder.Configuration)
                .Enrich.FromLogContext()
-               .WriteTo.Console()
-               .CreateLogger();
+               .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] [{CorrelationId}] {Message:lj}{NewLine}{Exception}");
+
+            if (useOtlpExporter)
+            {
+                logBuilder
+               .WriteTo.OpenTelemetry(options =>
+               {
+                   options.Endpoint = builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"];
+                   options.ResourceAttributes.Add("service.name", "apiservice");
+               });
+            }
+            ;
+
+            Log.Logger = logBuilder.CreateBootstrapLogger();
 
             builder.Host.UseSerilog();
 
@@ -106,6 +120,7 @@ namespace DaprAspire.Gateway
             });
 
             app.UseRouting();
+            app.UseMiddleware<CorrelationIdMiddleware>();
             app.UseMiddleware<ExceptionHandlingMiddleware>();
             app.UseAuthentication();
             app.UseAuthorization();
