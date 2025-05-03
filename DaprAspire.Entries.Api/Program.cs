@@ -52,6 +52,9 @@ namespace DaprAspire.Entries.Api
             builder.Services.AddMongo(builder.Configuration);
             builder.Services.AddRepositories();
 
+            builder.Services.AddAuth(builder.Configuration);
+            builder.Services.AddAuthorization();
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(options =>
             {
@@ -84,6 +87,7 @@ namespace DaprAspire.Entries.Api
             }
 
             //app.UseHttpsRedirection();
+            app.UseAuthentication();
             app.UseAuthorization();
                        
             app.MapControllers();

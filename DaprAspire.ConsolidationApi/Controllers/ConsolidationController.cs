@@ -2,12 +2,14 @@
 using Dapr;
 using DaprAspire.Domain.CrossCutting.Messaging.Events;
 using DaprAspire.Consolidation.Application.Services.ProjectionService;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DaprAspire.ConsolidationApi.Controllers
 {
     [ApiController]
     [Route("events/entries")]
     [ApiExplorerSettings(IgnoreApi = true)]
+    [Authorize]
     public class ConsolidationController(IEntryProjectionService projectionService, ILogger<ConsolidationController> logger) : ControllerBase
     {
         private readonly IEntryProjectionService _projectionService = projectionService;

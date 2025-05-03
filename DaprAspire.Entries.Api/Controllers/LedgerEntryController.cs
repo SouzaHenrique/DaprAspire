@@ -7,11 +7,13 @@ using EventFlow;
 using EventFlow.Queries;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DaprAspire.Entries.Api.Controllers
 {
     [ApiController]
     [Route("entries")]
+    [Authorize]
     public class LedgerEntryController(ICommandBus commandBus,
                                        IQueryProcessor queryProcessor,
                                        ILogger<LedgerEntryController> logger) : ControllerBase

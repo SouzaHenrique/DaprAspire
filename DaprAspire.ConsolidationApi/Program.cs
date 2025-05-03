@@ -49,6 +49,9 @@ namespace DaprAspire.ConsolidationApi
             builder.Services.AddRepositories();
             builder.Services.AddProjectionServices();
 
+            builder.Services.AddAuth(builder.Configuration);
+            builder.Services.AddAuthorization();
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(options =>
             {
@@ -83,6 +86,7 @@ namespace DaprAspire.ConsolidationApi
 
             //app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();
