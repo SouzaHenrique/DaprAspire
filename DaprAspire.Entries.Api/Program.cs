@@ -1,5 +1,6 @@
 ﻿using DaprApire.Entries.Application;
 
+using DaprAspire.Entries.Api.Identity;
 using DaprAspire.Entries.Api.Middlewares;
 using DaprAspire.Entries.Infrastructure;
 

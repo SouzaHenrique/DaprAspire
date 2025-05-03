@@ -1,4 +1,5 @@
 ﻿using DaprAspire.Consolidation.Application;
+using DaprAspire.ConsolidationApi.Identity;
 using DaprAspire.ConsolidationApi.Middlewares;
 
 using Microsoft.OpenApi.Models;
